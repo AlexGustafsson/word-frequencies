@@ -1,0 +1,9 @@
+# Ignore dynamically created files
+__pycache__
+*.pyc
+
+# Ignore macOS DS Store files
+.DS_Store
+
+# Ignore downloaded files
+frequency-data
