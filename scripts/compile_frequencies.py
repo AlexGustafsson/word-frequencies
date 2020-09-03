@@ -89,7 +89,7 @@ def download(output_directory: str, language: str) -> None:
     [future.wait() for future in futures]
 
 
-def compile_bucket(bucket: List[str]) -> Dict[str, int]:
+def compile_frequency_bucket(bucket: List[str]) -> Dict[str, int]:
     """Compile a bucket."""
     logger.info("Compiling %d articles in bucket", len(bucket))
     compiled = "\n".join(bucket)
@@ -101,8 +101,8 @@ def compile_bucket(bucket: List[str]) -> Dict[str, int]:
     counted_words = count(words)
     return counted_words
 
-def compile(output_directory: str, language: str) -> None:
-    """Compile a worldist for the language."""
+def compile_frequency(output_directory: str, language: str) -> None:
+    """Compile a frequency list for the language."""
     # Download all articles if they don't exist
     download(output_directory, language)
 
@@ -131,6 +131,18 @@ def compile(output_directory: str, language: str) -> None:
     json.dump(counted_words, stdout)
 
 
+def compile_text(output_directory: str, language: str) -> None:
+    """Compile a large text file for the language."""
+    # Download all articles if they don't exist
+    download(output_directory, language)
+
+    logger.info("Loading all articles")
+    articles = load_all(output_directory)
+
+    compiled = "\n".join(articles)
+
+    print(compiled)
+
 def main() -> None:
     """Main entrypoint."""
     # Create an argument parser for parsing CLI arguments
@@ -141,7 +153,7 @@ def main() -> None:
     # Add optional parameters for the server connection
     parser.add_argument("-c", "--cache", type=str, default="./frequency-data", required=False, help="The cache directory to use")
     # Add a command parameter
-    parser.add_argument("command", type=str, choices=["download", "compile"], help="Command to execute")
+    parser.add_argument("command", type=str, choices=["download", "compile-frequency", "compile-text"], help="Command to execute")
 
     # Parse the arguments
     options = parser.parse_args()
@@ -153,8 +165,10 @@ def main() -> None:
 
     if options.command == "download":
         download(output_directory, options.language)
-    elif options.command == "compile":
-        compile(output_directory, options.language)
+    elif options.command == "compile-frequency":
+        compile_frequency(output_directory, options.language)
+    elif options.command == "compile-text":
+        compile_text(output_directory, options.language)
 
 if __name__ == '__main__':
     main()
