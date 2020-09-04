@@ -12,23 +12,21 @@ The `script` directory contains several scripts that can be used individually as
 
 There are scripts to fetch data from Wikipedia articles, Gutenberg books as well as other regional sources.
 
-The `scripts/processing/compile` script can be used to download and compile large text files for a language as well as a frequency map.
+The scripts in `scripts/processing` can be used to download and compile large text files for a language as well as a frequency map.
 
-The `scripts/ai/test_ai` and `scripts/ai/train_ai` scripts can be used to train a MLE model using NLTK to predict the likelihood of a specific word being in a sentence, as well as generating new sentences. 
+The `scripts/ai/test_ai` and `scripts/ai/train_ai` scripts can be used to train a MLE model using NLTK to predict the likelihood of a specific word being in a sentence, as well as generating new sentences.
 
 ### Available data
 
-As of now, this repository contains data for the Swedish and English language.
+As of now, this repository contains data for the Swedish and English language. No data is available within the repository itself since v1.0.0. Instead, releases are made containing the data.
 
 #### Swedish
 
-The Swedish words file was compiled by [almgru](https://github.com/almgru): https://github.com/almgru/svenska-ord.txt. The words are compiled from the Swedish Academy Dictionary. Some edits have been made to remove word endings and combined words with spaces in them, such as `lägga till` -> `lägga` and `till`.
-
-The word frequencies were compiled by using the compilation script in this repository. In total, there were 981 Wikipedia articles scraped and 150 000 unique words collected.
+The word frequencies were compiled by using the compilation script in this repository.
 
 #### English
 
-The word frequencies were compiled by using the compilation script in this repository. In total, there were 990 Wikipedia articles scraped and 122 000 unique words collected.
+The word frequencies were compiled by using the compilation script in this repository.
 
 ### Contributing
 
