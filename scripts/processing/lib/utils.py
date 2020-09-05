@@ -6,12 +6,16 @@ from os import makedirs, path, listdir
 logger = logging.getLogger(__name__)
 
 
-def store(output_directory: str, filename: str, content: str) -> None:
-    """Store a file in the output directory. Creates the path as needed."""
+def assert_file(output_directory: str, filename: str) -> None:
+    """Create the path to a file if it does not exist."""
     parent_directory = path.join(output_directory, path.dirname(filename))
     if not path.exists(parent_directory):
         makedirs(parent_directory)
 
+
+def store(output_directory: str, filename: str, content: str) -> None:
+    """Store a file in the output directory. Creates the path as needed."""
+    assert_file(output_directory, filename)
     with open(path.join(output_directory, filename), "w") as file:
         file.write(content)
 
