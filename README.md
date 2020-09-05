@@ -23,6 +23,7 @@ As of now, this repository contains data for the Swedish and English language. N
 #### Swedish
 
 1. Word frequencies - roughly 300 000 words and how often they occur.
+1. Character frequencies - roughly 600 characters and how often they occur.
 2. bigrams - roughly 1 600 000 unique bigrams.
 3. trigrams - roughly 2 150 650 unique trigrams.
 
