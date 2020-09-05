@@ -8,5 +8,4 @@ __pycache__
 # Ignore downloaded files
 frequency-data
 
-*.tgz
-*.zip
+dist

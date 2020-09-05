@@ -9,6 +9,6 @@ python3 -m scripts.processing.ngram -l sv -n 3
 python3 -m scripts.processing.ngram -l sv -n 2
 
 # The compiled source is not included due to potential licensing issues
-
-tar -czf frequency-data.tgz $(find frequency-data/compiled -type f -not -iname "compiled.txt")
-zip frequency-data.zip $(find frequency-data/compiled -type f -not -iname "compiled.txt")
+mkdir -p dist
+tar -czf dist/frequency-data.tgz $(find frequency-data/compiled -type f -not -iname "compiled.txt")
+zip dist/frequency-data.zip $(find frequency-data/compiled -type f -not -iname "compiled.txt")
