@@ -33,6 +33,10 @@ Note: Due to the nature of the sources from which the data was retrieved, it is 
 
 The word frequencies were compiled by using the compilation script in this repository.
 
+#### Others
+
+Is your language missing from the released compilations? Fear not! This repository holds scripts that are designed to be as multilingual as possible. The available languages are compiled due to my personal interest, but the scripts are purposefully designed to allow fetching any language available on Wikipedia, Project Gutenberg etc. with a modular approach to easily be able to add regional sources such as local media etc.
+
 ### Contributing
 
 Any help with the project is more than welcome. If you're unable to add a change yourself, open an issue and let someone else take a look at it.
