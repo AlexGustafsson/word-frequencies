@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 # Requires NLTK to be installed:
 # python3 -m pip install nltk
 # python3 -c 'import nltk;nltk.download("punkt")'
-# May be slow at first start due to NLTK preparing its dependencies
+# May be slow at first start due to Python preparing the dependencies
 from nltk import word_tokenize, sent_tokenize
 from nltk.lm.preprocessing import padded_everygram_pipeline
 from nltk.lm import MLE
