@@ -27,6 +27,8 @@ As of now, this repository contains data for the Swedish and English language. N
 2. bigrams - roughly 1 600 000 unique bigrams.
 3. trigrams - roughly 2 150 650 unique trigrams.
 
+Note: Due to the nature of the sources from which the data was retrieved, it is likely that the character frequencies contain foreign characters such as `海` and characters from the international phonetic alphabet. To mitigate this, when using the character frequencies, filter out characters that are not used more than `n` times where `n` is low (0-15).
+
 #### English
 
 The word frequencies were compiled by using the compilation script in this repository.
