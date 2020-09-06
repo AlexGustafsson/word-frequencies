@@ -6,8 +6,8 @@ from os import path, makedirs
 
 from scripts.processing.lib.utils import find_files, chunks, exists, load, store
 from scripts.processing.lib.clean import clean_text
-from scripts.sources.gutenberg import clean_gutenberg_book
-from scripts.sources.wikipedia import clean_wikipedia_article
+from scripts.sources.multilingual.gutenberg import clean_gutenberg_book
+from scripts.sources.multilingual.wikipedia import clean_wikipedia_article
 
 # Configure the default logging format
 logging.basicConfig(

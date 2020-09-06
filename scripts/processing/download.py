@@ -4,8 +4,8 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Any, List, Tuple
 from os import path
 
-from scripts.sources.wikipedia import fetch_top_wikipedia_articles, fetch_wikipedia_article
-from scripts.sources.gutenberg import fetch_available_gutenberg_books, fetch_gutenberg_book
+from scripts.sources.multilingual.wikipedia import fetch_top_wikipedia_articles, fetch_wikipedia_article
+from scripts.sources.multilingual.gutenberg import fetch_available_gutenberg_books, fetch_gutenberg_book
 from scripts.processing.lib.utils import chunks, store, exists
 
 # Configure the default logging format
