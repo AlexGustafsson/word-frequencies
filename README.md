@@ -40,3 +40,7 @@ Is your language missing from the released compilations? Fear not! This reposito
 ### Contributing
 
 Any help with the project is more than welcome. If you're unable to add a change yourself, open an issue and let someone else take a look at it.
+
+### Disclaimer
+
+_All of the content compiled in releases were created by third parties. The selection is unbiased from this project's point of view, but may contain biased content. It is a non-goal of this project to provide a censored, altered or cherry-picked dataset. As such there may exist racial slurs and derogatory terms. Keep that in mind if you use the dataset for creating applications or AIs._
