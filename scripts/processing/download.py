@@ -6,6 +6,7 @@ from os import path
 
 from scripts.sources.multilingual.wikipedia import fetch_top_wikipedia_articles, fetch_wikipedia_article
 from scripts.sources.multilingual.gutenberg import fetch_available_gutenberg_books, fetch_gutenberg_book
+from scripts.sources.multilingual.wiktionary import fetch_wiktionary_dump
 from scripts.processing.lib.utils import chunks, store, exists
 
 # Configure the default logging format
@@ -30,6 +31,8 @@ def download_bucket(output_directory: str, language: str, bucket: List[Tuple[str
             filename = "wikipedia/{}.txt".format(parameter.replace("/", "_"))
         elif source == "gutenberg":
             filename = "gutenberg/{}.txt".format(parameter[0].replace("/", "_"))
+        elif source == "wiktionary":
+            filename = "wiktionary/dump.xml"
 
         if exists(output_directory, "downloads/{}/{}".format(language, filename)):
             logger.info("Skipping download source=%s filename=%s", source, filename)
@@ -42,6 +45,9 @@ def download_bucket(output_directory: str, language: str, bucket: List[Tuple[str
                 elif source == "gutenberg":
                     logger.info("Fetching source=Gutenberg book='%s' id=%s", parameter[1], parameter[0])
                     content = fetch_gutenberg_book(parameter[0])
+                elif source == "wiktionary":
+                    logger.info("Fetching dump source=Wiktionary")
+                    content = fetch_wiktionary_dump(language)
                 logger.info("Storing source=%s filename=%s", source, filename)
                 store(output_directory, "downloads/{}/{}".format(language, filename), content)
             except:
@@ -55,7 +61,7 @@ def download(output_directory: str, language: str) -> None:
     logger.info("Fetching available Gutenberg books language=%s", language)
     gutenberg_books = [("gutenberg", x) for x in fetch_available_gutenberg_books(language)]
 
-    fetches = top_articles + gutenberg_books
+    fetches = top_articles + [("wiktionary", None)]
 
     buckets = chunks(fetches, min(10, len(fetches)))
     logger.info("Downloading threads=%d", len(buckets))

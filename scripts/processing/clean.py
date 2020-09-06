@@ -8,6 +8,7 @@ from scripts.processing.lib.utils import find_files, chunks, exists, load, store
 from scripts.processing.lib.clean import clean_text
 from scripts.sources.multilingual.gutenberg import clean_gutenberg_book
 from scripts.sources.multilingual.wikipedia import clean_wikipedia_article
+from scripts.sources.multilingual.wiktionary import clean_wiktionary_article, extract_wiktionary_articles
 
 # Configure the default logging format
 logging.basicConfig(
@@ -42,6 +43,9 @@ def clean_bucket(output_directory: str, language: str, bucket: List[Tuple[str, A
                 elif source == "gutenberg":
                     logger.info("Cleaning with special handler source=Gutenberg filename=%s", filename)
                     content = clean_gutenberg_book(content)
+                elif source == "wiktionary":
+                    logger.info("Cleaning with special handler source=Wiktionary filename=%s", filename)
+                    content = "\n".join([clean_wiktionary_article(article) for article in extract_wiktionary_articles(content)])
 
                 logger.info("Cleaning using generic cleaner filename=%s size=%d", filename, len(content))
                 content = clean_text(content)
