@@ -6,6 +6,7 @@ from os import path
 
 from scripts.sources.multilingual.wikipedia import fetch_top_wikipedia_articles, fetch_wikipedia_article
 from scripts.sources.multilingual.gutenberg import fetch_available_gutenberg_books, fetch_gutenberg_book
+from scripts.sources.swedish.litteraturbanken import fetch_available_litteraturbanken_books, fetch_litteraturbanken_books
 from scripts.processing.lib.utils import chunks, store, exists
 
 # Configure the default logging format
@@ -30,11 +31,16 @@ def download_bucket(output_directory: str, language: str, bucket: List[Tuple[str
             filename = "wikipedia/{}.txt".format(parameter.replace("/", "_"))
         elif source == "gutenberg":
             filename = "gutenberg/{}.txt".format(parameter[0].replace("/", "_"))
+        elif source == "litteraturbanken":
+            filename = "litteraturbanken/{}".format(parameter[0])
+        else:
+            logger.warn("Got unknown source %s", source)
+            continue
 
         if exists(output_directory, "downloads/{}/{}".format(language, filename)):
             logger.info("Skipping download source=%s filename=%s", source, filename)
         else:
-            content = ""
+            content = None
             try:
                 if source == "wikipedia":
                     logger.info("Downloading source=Wikipedia article=%s", parameter)
@@ -42,20 +48,29 @@ def download_bucket(output_directory: str, language: str, bucket: List[Tuple[str
                 elif source == "gutenberg":
                     logger.info("Fetching source=Gutenberg book='%s' id=%s", parameter[1], parameter[0])
                     content = fetch_gutenberg_book(parameter[0])
-                logger.info("Storing source=%s filename=%s", source, filename)
-                store(output_directory, "downloads/{}/{}".format(language, filename), content)
+                elif source == "litteraturbanken":
+                    logger.info("Fetching source=Litteraturbanken filename='%s' id=%s", parameter[0], parameter[1])
+                    content = fetch_litteraturbanken_books([parameter])
+                if content is not None:
+                    logger.info("Storing source=%s filename=%s", source, filename)
+                    store(output_directory, "downloads/{}/{}".format(language, filename), content)
             except:
                 logger.error("Unable to download source=%s filename=%s", source, filename, exc_info=True)
 
 
 def download(output_directory: str, language: str) -> None:
     """Download sources for the language."""
-    logger.info("Fetching top Wikipedia articles language=%s", language)
-    top_articles = [("wikipedia", x) for x in fetch_top_wikipedia_articles(language)]
-    logger.info("Fetching available Gutenberg books language=%s", language)
-    gutenberg_books = [("gutenberg", x) for x in fetch_available_gutenberg_books(language)]
+    fetches = []
 
-    fetches = top_articles + gutenberg_books
+    logger.info("Fetching top Wikipedia articles language=%s", language)
+    fetches += [("wikipedia", x) for x in fetch_top_wikipedia_articles(language)]
+
+    logger.info("Fetching available Gutenberg books language=%s", language)
+    fetches += [("gutenberg", x) for x in fetch_available_gutenberg_books(language)]
+
+    if language == "sv":
+        logger.info("Fetching available books from Litteraturbanken")
+        fetches += [("litteraturbanken", x) for x in fetch_available_litteraturbanken_books()]
 
     buckets = chunks(fetches, min(10, len(fetches)))
     logger.info("Downloading threads=%d", len(buckets))

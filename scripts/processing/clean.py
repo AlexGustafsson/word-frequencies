@@ -8,6 +8,7 @@ from scripts.processing.lib.utils import find_files, chunks, exists, load, store
 from scripts.processing.lib.clean import clean_text
 from scripts.sources.multilingual.gutenberg import clean_gutenberg_book
 from scripts.sources.multilingual.wikipedia import clean_wikipedia_article
+from scripts.sources.swedish.litteraturbanken import clean_litteraturbanken_book
 
 # Configure the default logging format
 logging.basicConfig(
@@ -42,6 +43,9 @@ def clean_bucket(output_directory: str, language: str, bucket: List[Tuple[str, A
                 elif source == "gutenberg":
                     logger.info("Cleaning with special handler source=Gutenberg filename=%s", filename)
                     content = clean_gutenberg_book(content)
+                elif source == "litteraturbanken":
+                    logger.info("Cleaning with special handler source=Litteraturbanken filename=%s", filename)
+                    content = clean_litteraturbanken_book(content)
 
                 logger.info("Cleaning using generic cleaner filename=%s size=%d", filename, len(content))
                 content = clean_text(content)

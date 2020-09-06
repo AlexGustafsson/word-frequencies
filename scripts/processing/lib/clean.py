@@ -6,7 +6,7 @@ from typing import List, Set
 digit_pattern = re.compile(r"\b\d+\b")
 possessive_pattern = re.compile(r"([a-z])'s")
 punctuation_pattern = re.compile(r"[!?.]")
-special_pattern = re.compile(r"[\\!\"#$%&'()*+,./:;<=>?@[\]^_{|}~)°→©²§½×ʃ•¾⊙°\u2020\u2030\u00b3\u00b9]")
+special_pattern = re.compile(r"[\\!\"#$%&'()*+,./:;<=>?@[\]^_{|}~)°→©²§½×ʃ•¾⊙°\u2020\u2030\u00b3\u00b9‿✯¼√═\u0333º⎫⎬⎭|\u2460-\u325aᚠ™]")
 hyphen_pattern = re.compile(r"\B-\B|\b-\B|\B-\b")
 whitespace_pattern = re.compile(r"\s+")
 newline_pattern = re.compile(r"\n+")
@@ -40,6 +40,9 @@ def normalize_unicode(text: str) -> str:
     text = unicode_question_pattern.sub("?", text)
     text = unicode_colon_pattern.sub(":", text)
     text = unicode_ellipsis_pattern.sub("...", text)
+
+    # TODO: \u2460-\u325a 0-30, currently in special characters instead
+
     return text
 
 
